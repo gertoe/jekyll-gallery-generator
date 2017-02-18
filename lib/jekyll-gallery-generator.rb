@@ -18,7 +18,8 @@ module Jekyll
     end
 
     def <=>(b)
-      return @date_time <=> b.date_time
+      cmp = @date_time <=> b.date_time
+      return cmp == 0 ? @name <=> b.name : cmp
     end
 
     def date_time
@@ -101,7 +102,11 @@ module Jekyll
       self.data["galleries"] = []
       begin
         sort_field = config["sort_field"] || "date_time"
-        galleries.sort! {|a,b| b.data[sort_field] <=> a.data[sort_field]}
+        galleries.sort! {|a,b|
+          cmp = b.data[sort_field] <=> a.data[sort_field]
+          # Tie goes to first alphabetically. The different order (a<=>b) is intentional.
+          cmp == 0 ? a.data["name"] <=> b.data["name"] : cmp
+        }
       rescue Exception => e
         puts "Error sorting galleries: #{e}"
         puts e.backtrace
@@ -131,7 +136,6 @@ module Jekyll
 
       config = site.config["gallery"] || {}
       gallery_config = {}
-      best_image = nil
       max_size_x = 400
       max_size_y = 400
       symlink = config["symlink"] || false
@@ -182,7 +186,6 @@ module Jekyll
         image = GalleryImage.new(name, dir)
         @images.push(image)
         date_times[name] = image.date_time
-        best_image = name
         @site.static_files << GalleryFile.new(site, base, File.join(@dest_dir, "thumbs"), name)
 
         if symlink
@@ -239,6 +242,10 @@ module Jekyll
 
       site.static_files = @site.static_files
       self.data["images"] = @images
+      best_image = nil
+      if @images.length > 0
+        best_image = @images[0].name
+      end
       best_image = gallery_config["best_image"] || best_image
       self.data["best_image"] = best_image
       if date_times.has_key?(best_image)
@@ -248,6 +255,8 @@ module Jekyll
         gallery_date_time = 0
       end
       self.data["date_time"] = gallery_date_time
+
+      self.data["info"] = gallery_config["info"] if gallery_config.key?("info")
     end
   end
 

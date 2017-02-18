@@ -49,7 +49,8 @@ gem install rmagick exifr
 
 ### Install dependencies on Ubuntu
 
-```apt install libmagick++-dev
+```bash
+apt install libmagick++-dev
 gem install rmagick exifr
 ```
 
@@ -80,6 +81,9 @@ gallery:
       sort_reverse: true    # Reverse sort images in gallery.
     secret_stuff:
       hidden: true          # Don't show this gallery on the index page. People must guess the URL.
+    with_info:
+      info:
+        desc: "Gallery Description" # Info fields can be used in custom templates.
 ```
 
 
