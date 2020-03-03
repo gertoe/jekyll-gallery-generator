@@ -13,13 +13,12 @@ layout: default
 .gallery {
   left: 0;
   right: 0;
-  width: 100% !important;
   margin-left: 0px;
   margin-right: 0px;
   text-align: center;
   background-color: #222;
-  min-width: 320px;
   color: #555;
+  width: 100% !important;
 }
 
 .gallery a,
@@ -42,7 +41,16 @@ layout: default
   height: 300px;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
+  .gallery .gallery-image-wrapper {
+    max-width: 100%;
+  }
+  .gallery-image {
+    margin: auto;
+  }
+}
+
+@media (max-width: 710px) {
   .gallery .gallery-image-wrapper {
     width: 100%;
   }
@@ -51,23 +59,13 @@ layout: default
   }
 }
 
-@media (max-width: 640px) {
-  .gallery .gallery-image-wrapper {
-    max-width: 100%;
-  }
-  .gallery-image {
-    margin: auto;
-    border: 16px #111 solid;
-  }
-}
-
-@media (min-width: 720px) {
+@media (min-width: 710px) {
   .gallery-image-wrapper {
     margin: 64px;
-    width: 300px;
+    min-width: 300px;
+    max-width: 100%;
   }
     .gallery-image {
-    margin: auto;
     border: 32px #111 solid;
   }
 }
@@ -133,4 +131,7 @@ $('a.imgsrc').featherlightGallery(
     openSpeed: 300
   });
 </script>
+
+<!-- Detect Swipe -->
+<script src="https://cdn.jsdelivr.net/npm/detect_swipe@2.1.4/jquery.detect_swipe.min.js" integrity="sha256-ih4NrRVYA2Nh9l/aDdBRTNd2HK875XnqsNX3z/J7RtU=" crossorigin="anonymous"></script>
 {% endif %}
