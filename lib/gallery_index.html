@@ -1,23 +1,113 @@
 ---
-layout: page
+layout: default
 ---
-<style TYPE="text/css">
-.gallery-wrapper {
-  width: 35em;
+<style type="text/css">
+.gallery-index {
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
   text-align: center;
-  padding: 1em 0 4em 0;
+  background-color: #222;
+  min-width: 320px;
+  color: #555;
 }
-.gallery-best-image{
-  max-height: 20em;
-  max-width: 20em;
-}
+
+  .gallery-index a,
+  .gallery-index a:link {
+    color: #aaa;
+    text-decoration: none;
+  }
+  .gallery-index a:visited {
+    color: #777;
+  }
+  .gallery-index a:active {
+    color: #fff;
+  }
+  .gallery-index .gallery-cover-wrapper {
+    display: inline-block;
+    padding: 0;
+    position: relative;
+    max-width: 100%;
+    min-width: 300px;
+    min-height: 300px;
+    text-align: center;
+    height: 400px;
+    margin: 32px;
+  }
+  @media (max-width: 770px) {
+    .gallery.index .gallery-cover-wrapper {
+      margin: 32px;
+      width: 400px;
+    }
+  }
+  @media (min-width: 770px) {
+    .gallery.index .gallery-cover-wrapper {
+      margin: 32px;
+      margin-bottom: 0;
+    }
+  }
+  .gallery-cover-wrapper{
+    display: inline-block;
+    text-align: center;
+    min-width: 300px;
+    min-height: 300px;
+    padding: 0;
+    padding-bottom: 128px;
+    max-width: 100%;
+  }
+  .gallery-index .galery-cover {
+    margin-top: auto;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    max-height: 100%;
+    max-width: 100%;
+  }
+  @media (min-width: 770px)
+  .gallery-cover-wrapper {
+    margin: 32px;
+    margin-bottom: 0;
+  }
+  @media (min-width: 770px) {
+    .gallery-index .gallery-cover {
+      left: -64px;
+      border: 32px #111 solid;
+    }
+  }
+
+  .gallery-cover:hover
+  {
+    display: block;
+    backgrouond: black;
+    -webkit-transition: all 10ms linear;
+    -moz-transition: all 10ms linear;
+    -ms-transition: all 10ms linear;
+    -o-transition: all 10ms linear;
+    transition: all 10ms linear;
+    opacity: 0.7;
+  }
+
+  div {
+    display: block;
+  }
 </style>
-{% for gallery in page.galleries %}
-<div class="gallery-wrapper">
-    <a href="{{ gallery['gallery'] }}">
-        <img class="gallery-best-image" src="{{ gallery['gallery'] }}/thumbs/{{ gallery['best_image'] }}">
-    </a>
-    <h3><a href="{{ gallery['gallery'] }}">{{ gallery["name"] }}</a></h3>
-    {{ gallery["images"] | size }} image{% if gallery["images"].size != 1 %}s{% endif %}
+
+<div class="post-header wrapper">
+  <h1 class="post-title">{{ page.title }}</h1>
 </div>
-{% endfor %}
+
+<div class="gallery-index">
+  {% for gallery in page.galleries %}
+  <div class="gallery-cover-wrapper">
+    <a href="{{ gallery['gallery'] }}">
+      <img class="gallery-cover" src="{{ gallery['gallery'] }}/thumbs/{{ gallery['best_image'] }}" alt="{{ gallery["name"] }}">
+    </a>
+    <h3>
+      <a href="{{ gallery['gallery'] }}">{{ gallery["name"] }}</a>
+    </h3>
+    {{ gallery["images"] | size }} Bild{% if gallery["images"].size != 1 %}er{% endif %}
+  </div>
+  {% endfor %}
+</div>

@@ -1,30 +1,136 @@
 ---
-layout: page
+layout: default
 ---
-<style TYPE="text/css">
-.gallery-image-wrapper {
-  height: 300px;
-  width: 300px;
-  display: inline-block;
-  margin: 1em;
-  position: relative;
+{% if site.gallery.lightbox %}
+<!-- Featherlight CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.css" integrity="sha256-UHP0vaPqS1SY6G5ySZndoVKzQJYBSVF2pqs4mPrDEcE=" crossorigin="anonymous" media="none" onload="if(media!='all')media='all'">
+<!-- Featherlight Gallery CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.css" integrity="sha256-daCpEGPdf4UfCBSSYSJPw9EQcPDjfvmroY9obVVc3nQ=" crossorigin="anonymous" media="none" onload="if(media!='all')media='all'">
+{% endif %}
+
+
+<style type="text/css">
+.gallery {
+  left: 0;
+  right: 0;
+  width: 100% !important;
+  margin-left: 0px;
+  margin-right: 0px;
+  text-align: center;
+  background-color: #222;
+  min-width: 320px;
+  color: #555;
 }
-.gallery-image {
-  margin: auto;
+
+.gallery a,
+.gallery a:link {
+  color: #aaa;
+  text-decoration: none;
+}
+.gallery a:visited {
+  color: #777;
+}
+.gallery a:active {
+  color: #fff;
+}
+
+.gallery .gallery-image-wrapper {
+  display: inline-block;
+  padding: 0;
+  position: relative;
+  max-width: 100%;
+  height: 300px;
+}
+
+@media (max-width: 720px) {
+  .gallery .gallery-image-wrapper {
+    width: 100%;
+  }
+  .gallery-image {
+    margin: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery .gallery-image-wrapper {
+    max-width: 100%;
+  }
+  .gallery-image {
+    margin: auto;
+    border: 16px #111 solid;
+  }
+}
+
+@media (min-width: 720px) {
+  .gallery-image-wrapper {
+    margin: 64px;
+    width: 300px;
+  }
+    .gallery-image {
+    margin: auto;
+    border: 32px #111 solid;
+  }
+}
+
+.gallery .gallery-image {
   position: absolute;
-  top: 0px;
-  bottom: 0px;
+  top: 0vh;
+  bottom: 0vh;
+  left: 0vw;
+  right: 0vw;
   max-height: 100%;
   max-width: 100%;
 }
+
+.gallery-image:hover
+{
+  display: block;
+  backgrouond: black;
+  -webkit-transition: all  10ms linear;
+  -moz-transition: all 10ms linear;
+  -ms-transition: all 10ms linear;
+  -o-transition: all 10ms linear;
+  transition: all 10ms linear;
+  opacity: 0.7;
+}
 </style>
-<h1><a href="/{{ site.gallery.dir }}">{{ page.title }}</a></h1>
-<hr />
-{% for image in page.images %}
-    <div class="gallery-image-wrapper">
-        <a name="{{ image.name }}"></a>
-        <a href="{{ image.name }}"{% if site.gallery.lightbox %} rel="lightbox[{{ page.gallery }}]"{% endif %}>
-            <img class="gallery-image" src="thumbs/{{ image.name }}" />
-        </a>
-    </div>
-{% endfor %}
+
+
+<div class="post-header wrapper">
+  <h1 class="post-title">{{ page.title }}</h1>
+  <h1><a href="/{{ site.gallery.dir }}">zurück</a></h1>
+</div>
+
+<div class="gallery"{% if site.gallery.lightbox %} data-featherlight-gallery data-featherlight-filter="a"{% endif %}>
+  {% for image in page.images %}
+  <div class="gallery-image-wrapper">
+    <div name="{{ image.name }}"></div>
+    <a class="imgsrc" href="{{ image.name }}" {% if site.gallery.lightbox %}data-featherlight="image"{% endif %}>
+      <img class="gallery-image" src="thumbs/{{ image.name }}"/>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+
+{% if site.gallery.lightbox %}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous"></script>
+<!-- Featherlight JS -->
+<script src="https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js"
+        integrity="sha256-n/xqYYgRqwjNP/0+0VT5jmenhdqhKCSkSpmFT5aPGZM="
+        crossorigin="anonymous"></script>
+<!-- Featherlight Gallery JS -->
+<script src="https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.js"
+        integrity="sha256-jVM3nPKst3pnO7NaV1a+YGb+XnbfjWQ/6VmLosrq1ZU="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+$('a.imgsrc').featherlightGallery(
+  {
+    galleryFadeIn: 300,
+    openSpeed: 300
+  });
+</script>
+{% endif %}
