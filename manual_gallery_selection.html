@@ -1,0 +1,55 @@
+---
+permalink: /manual-gallery.html
+layout: default
+---
+{% if site.gallery.lightbox %}
+<!-- Featherlight CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.css" integrity="sha256-UHP0vaPqS1SY6G5ySZndoVKzQJYBSVF2pqs4mPrDEcE=" crossorigin="anonymous" media="none" onload="if(media!='all')media='all'">
+<!-- Featherlight Gallery CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.css" integrity="sha256-daCpEGPdf4UfCBSSYSJPw9EQcPDjfvmroY9obVVc3nQ=" crossorigin="anonymous" media="none" onload="if(media!='all')media='all'">
+{% endif %}
+
+
+{% for p in site.pages %}
+  {% for gallery in p.galleries %}
+  <div class="gallery"{% if site.gallery.lightbox %} data-featherlight-gallery data-featherlight-filter="a"{% endif %}>
+    {% if gallery['gallery'] == "MANUAL GALLERY SELECTION" %}
+      {% for image in gallery.images %}
+      <div class="gallery-image-wrapper">
+        <div name="{{ image.name }}"></div>
+        <!-- link correct gallery folder/image:
+          site.gallery.dir   -> dir of galleries
+          gallery['gallery'] -> directory of gallery requested (see above), "gallery name"
+          Do so for the thumbnail, respectively...
+        -->
+        <a class="imgsrc" href="{{ site.gallery.dir }}/{{ gallery['gallery'] }}/{{ image.src }}" {% if site.gallery.lightbox %}data-featherlight="image"{% endif %}>
+          <img class="gallery-image" src="{{ site.gallery.dir }}/{{ gallery['gallery'] }}/thumbs/{{ image.src }}" />
+        </a>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  {% endfor %}
+{% endfor %}
+
+{% if site.gallery.lightbox %}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- Featherlight JS -->
+<script src="https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js" integrity="sha256-n/xqYYgRqwjNP/0+0VT5jmenhdqhKCSkSpmFT5aPGZM=" crossorigin="anonymous"></script>
+<!-- Featherlight Gallery JS -->
+<script src="https://cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.js" integrity="sha256-jVM3nPKst3pnO7NaV1a+YGb+XnbfjWQ/6VmLosrq1ZU=" crossorigin="anonymous"></script>
+
+<!-- Bind featherligh to gallery images -->
+<script type="text/javascript">
+$('a.imgsrc').featherlightGallery(
+  {
+    galleryFadeIn: 300,
+    openSpeed: 300
+  });
+</script>
+
+<!-- Swipe detection (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/detect_swipe@2.1.4/jquery.detect_swipe.min.js" integrity="sha256-ih4NrRVYA2Nh9l/aDdBRTNd2HK875XnqsNX3z/J7RtU=" crossorigin="anonymous"></script>
+{% endif %}
+

@@ -75,20 +75,21 @@ gallery:
   # The following options are for individual galleries.
   galleries:
     chile_trip:
-      best_image: IMG_1068.JPG  # The image to show on the gallery index page. Defaults to the last image.
+      best_image: IMG_1068.JPG  # The image to show on the gallery index page. Defaults to the first image.
     japan_trip:
       best_image: IMG_0690.JPG
-      name: "日本の旅"       # Defaults to directory name
+      name: "日本の旅"       # Defaults to directory name (use url_encode.rb to preserve special characters working!)
     awesome_stuff:
       best_image: snaileo_gonzales.jpg
       sort_reverse: true    # Reverse sort images in gallery.
     secret_stuff:
       hidden: true          # Don't show this gallery on the index page. People must guess the URL.
-    info: # Info fields can be used in custom templates, e.g.
-      camera: "Pentax KX"
-      film: "Ilford HP5+ @ EI400"
-      lens: "SMC Pentax-M 50/1.7"
-      desc: "Some description of the gallery..."
+    gallery with info: # gallery for which information should be printed
+      info: # Info fields can be used in custom templates, e.g.
+        camera: "Pentax KX"
+        film: "Ilford HP5+ @ EI400"
+        lens: "SMC Pentax-M 50/1.7"
+        desc: "Some description of the gallery..."
 ```
 
 
@@ -98,3 +99,9 @@ If you want to customize the templates used by this generator, copy `gallery_ind
 
     cp lib/gallery_index.html jekyll-site/_layouts/
     cp lib/gallery_page.html jekyll-site/_layouts/
+
+
+## Manually including galleries on any page
+
+If a gallery is _not_ hidden, then the respective gallery can be included manually on any page. However, the current working solution (see `manual_gallery_selection.html` for an example) is rather a workaround than a satisfying solution.
+
