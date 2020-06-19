@@ -78,15 +78,17 @@ gallery:
       best_image: IMG_1068.JPG  # The image to show on the gallery index page. Defaults to the last image.
     japan_trip:
       best_image: IMG_0690.JPG
-      name: "日本の旅"       # Defaults to directory name, replacing _ with spaces & capitalizing words.
+      name: "日本の旅"       # Defaults to directory name
     awesome_stuff:
       best_image: snaileo_gonzales.jpg
       sort_reverse: true    # Reverse sort images in gallery.
     secret_stuff:
       hidden: true          # Don't show this gallery on the index page. People must guess the URL.
-    with_info:
-      info:
-        desc: "Gallery Description" # Info fields can be used in custom templates.
+    info: # Info fields can be used in custom templates, e.g.
+      camera: "Pentax KX"
+      film: "Ilford HP5+ @ EI400"
+      lens: "SMC Pentax-M 50/1.7"
+      desc: "Some description of the gallery..."
 ```
 
 
